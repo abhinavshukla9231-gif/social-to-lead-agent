@@ -166,7 +166,7 @@ F --> G[lead_node]
 G -->|incomplete| H[END]
 G -->|complete| I[tool_node]
 
-I --> J[mock_lead_capture()]
+I --> J[mock_lead_capture]
 J --> K[END]
 
 C --> K
