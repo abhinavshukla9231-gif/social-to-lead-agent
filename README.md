@@ -27,7 +27,7 @@ A terminal-based conversational AI agent that turns social media interest into q
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/social-to-lead-agent.git
+git clone https://github.com/abhinavshukla9231-gif/social-to-lead-agent.git
 cd social-to-lead-agent
 ```
 
@@ -71,12 +71,13 @@ python main.py
 ## Project Structure
 
 ```
-Social-to-Lead Agentic Bot/
-├── main.py            # Agent logic, graph nodes, routers, chat loop
-├── knowledge.md       # Local knowledge base used for RAG
-├── requirements.txt   # Project dependencies
-├── .env.example       # Environment variable template
-└── README.md          # This file
+Social-to-Lead Agentic Workflow/
+├── .gitignore
+├── README.md
+├── requirements.txt
+└── Social-to-Lead Agentic Bot/
+    ├── main.py
+    └── knowledge.md
 ```
 
 ---
@@ -150,26 +151,27 @@ Pricing and policy data lives in `knowledge.md`. When a user asks about plans or
 
 ## Graph Overview
 
-```
-User Input
-    |
-    v
-[intent_node]  -- classifies: greeting / pricing / high_intent / general
-    |
-    |-- greeting   --> [greeting_node]  --> END
-    |-- pricing    --> [rag_node]       --> END
-    |-- general    --> [general_node]   --> END
-    |-- high_intent or mid-collection
-                   --> [extract_node]   -- pulls name, email, platform from input
-                             |
-                             v
-                        [lead_node]     -- asks for missing fields one at a time
-                             |
-                    .--------+--------.
-                    |                 |
-               incomplete          complete
-                    |                 |
-                   END          [tool_node] --> mock_lead_capture() --> END
+```mermaid
+flowchart TD
+
+A[User Input] --> B[intent_node]
+
+B -->|greeting| C[greeting_node]
+B -->|pricing| D[rag_node]
+B -->|general| E[general_node]
+B -->|high_intent or mid-collection| F[extract_node]
+
+F --> G[lead_node]
+
+G -->|incomplete| H[END]
+G -->|complete| I[tool_node]
+
+I --> J[mock_lead_capture()]
+J --> K[END]
+
+C --> K
+D --> K
+E --> K
 ```
 
 ---
